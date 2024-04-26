@@ -3,7 +3,7 @@
 	public class AuthorDTO
 	{
 		public string? AuthorFirstName { get; set; } // Имя
-		public string? LastName { get; set; } // Фамилия
-		public string? SurName { get; set; } // Отчество
+		public string? AuthorLastName { get; set; } // Фамилия
+		public string? AuthorSurName { get; set; } // Отчество
 	}
 }

@@ -2,7 +2,6 @@
 using LibraryWebAPI.DTOS;
 using LibraryWebAPI.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 
 namespace LibraryWebAPI.Services
 {
@@ -117,7 +116,8 @@ namespace LibraryWebAPI.Services
 			if (bookDTO == null) return null;
 			else
 			{
-				_context.Entry(book).CurrentValues.SetValues(bookDTO);
+				_context.Entry(book).CurrentValues
+					.SetValues(bookDTO);
 				await _context.SaveChangesAsync();
 				var newBook = await _context.Books.FirstOrDefaultAsync(b => b.Id == id);
 				return newBook;
