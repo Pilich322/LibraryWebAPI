@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace LibraryWebAPI.Entities
 {
@@ -10,6 +11,7 @@ namespace LibraryWebAPI.Entities
 		public int AuthorId { get; set; } // Айдишник автора
 										
 		[JsonIgnore]  // Показываем БД, где и с чем будет связь (Стремление к 3НФ)
+		[ForeignKey("AuthorId")] // Определяем внешний ключ
 		public Author? Author { get; set; }
 	}
 }

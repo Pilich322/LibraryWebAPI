@@ -38,7 +38,7 @@ namespace LibraryWebAPI.Services
 
 		public async Task<bool> DeleteAuthor(int id)
 		{
-			var author = await _context.Authors.FirstOrDefaultAsync(a => a.Id == id);
+			var author = await _context.Authors.FindAsync(id);
 			if (author == null) return false;
 			else
 			{
