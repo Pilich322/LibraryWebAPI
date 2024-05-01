@@ -14,28 +14,57 @@ namespace LibraryWebAPI.Controllers
 		{
 			_authorService = authorService;
 		}
-		[HttpPost("createauthor")]
+        /// <summary>
+        /// Создать нового автора
+        /// </summary>
+        /// <param name="authorDTO">DTO автора</param>
+        /// <returns>Результат создания автора</returns>
+        [HttpPost]
 		public async Task<IActionResult> CreateAuthor(AuthorDTO authorDTO)
-			=> Ok(await _authorService.CreateAuthor(authorDTO));
+        {
+            var createAuthors = await _authorService.CreateAuthor(authorDTO);
+            if (createAuthors == false) return NotFound();
+            return Ok(createAuthors);
+        }
 
-		[HttpGet("getauthor")]
+        [HttpGet]
 		public async Task<IActionResult> GetAuthors()
-			=> Ok(await _authorService.GetAuthors());
+        {
+            var getAuthors = await _authorService.GetAuthors();
+            if (getAuthors == null) return NotFound();
+            return Ok(getAuthors);
+        }
 
-		[HttpGet("getauthor/{id}")]
+        [HttpGet("{id}")]
 		public async Task<IActionResult> GetAuthor(int id)
-			=> Ok(await _authorService.GetAuthor(id));
+        {
+            var getAuthor = await _authorService.GetAuthor(id);
+            if (getAuthor == null) return NotFound();
+            return Ok(getAuthor);
+        }
 
-		[HttpDelete("deleteauthor/{id}")]
+        [HttpDelete("{id}")]
 		public async Task<IActionResult> DeleteAuthor(int id)
-			=> Ok(await _authorService.DeleteAuthor(id));
+        {
+            var deleteAuthor = await _authorService.DeleteAuthor(id);
+            if (deleteAuthor == false) return NotFound();
+            return Ok(deleteAuthor);
+        }
 
-		[HttpPatch("updateauthor/{id}")]
+        [HttpPatch("{id}")]
 		public async Task<IActionResult> PatchAuthor([FromBody] AuthorDTO authorDTO, int id)
-			=> Ok(await _authorService.PatchAuthor(authorDTO, id));
+        {
+            var updateAuthor = await _authorService.PatchAuthor(authorDTO, id);
+            if (updateAuthor == null) return NotFound();
+            return Ok(updateAuthor);
+        }
 
-		[HttpPut("updateauthor/{id}")]
-		public async Task<IActionResult> PutAuthor(AuthorDTO authorDTO, int id)
-			=> Ok(await _authorService.PutAuthor(authorDTO, id));
-	}
+        [HttpPut("{id}")]
+		public async Task<IActionResult> PutAuthor([FromBody] AuthorDTO authorDTO, int id)
+        {
+            var updateAuthor = await _authorService.PutAuthor(authorDTO, id);
+            if (updateAuthor == null) return NotFound();
+            return Ok(updateAuthor);
+        }
+    }
 }

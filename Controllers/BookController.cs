@@ -6,43 +6,70 @@ using System.Diagnostics;
 
 namespace LibraryWebAPI.Controllers
 {
-	[ApiController] // Указываем, что класс яв-ся контроллером
-	[Route("/books")] // Указываем путь, по которому будет доступен контроллер
-	public class BookController : ControllerBase // Наследуемся
-	{
-		private readonly BookService _bookService;
+    [ApiController] // Указываем, что класс яв-ся контроллером
+    [Route("/books")] // Указываем путь, по которому будет доступен контроллер
+    public class BookController : ControllerBase // Наследуемся
+    {
+        private readonly BookService _bookService;
 
-		public BookController(BookService bookService)
-		{
-			_bookService = bookService;
-		}
+        public BookController(BookService bookService)
+        {
+            _bookService = bookService;
+        }
 
-		[HttpPost("createbookonfio")]
-		public async Task<IActionResult> CreateBook(BookAndAuthorsDTO bookDTO) 
-			=> Ok(await _bookService.CreateBookAsync(bookDTO));
+        [HttpPost]
+        public async Task<IActionResult> CreateBook([FromBody] BookAndAuthorsDTO bookDTO)
+        {
+            var createBooks = await _bookService.CreateBookAsync(bookDTO);
+            if (createBooks == false) return NotFound();
+            return Ok(createBooks);
+        }
 
-		[HttpPost("createbook/{id}")]
-		public async Task<IActionResult> CreateBook(BookDTO bookDTO, int id)
-			=> Ok(await _bookService.CreateBookAsync(bookDTO, id));
+        [HttpPost("{id}")]
+        public async Task<IActionResult> CreateBook([FromBody] BookDTO bookDTO, int id)
+        {
+            var createBooks = await _bookService.CreateBookAsync(bookDTO, id);
+            if (createBooks == false) return NotFound();
+            return Ok(createBooks);
+        }
 
-		[HttpGet("getbook")]
-		public async Task<IActionResult> GetBooks()
-			=> Ok(await _bookService.GetBooks());
+        [HttpGet]
+        public async Task<IActionResult> GetBooks()
+        {
+            var getBooks = await _bookService.GetBooks();
+            if (getBooks == null) return NotFound();
+            return Ok(getBooks);
+        }
 
-		[HttpGet("getbook/{id}")]
-		public async Task<IActionResult> GetBook(int id)
-			=> Ok(await _bookService.GetBook(id));
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetBook(int id)
+        {
+            var getBook = await _bookService.GetBook(id);
+            if (getBook == null) return NotFound();
+            return Ok(getBook);
+        }
 
-		[HttpDelete("deletebook/{id}")]
-		public async Task<IActionResult> DeleteBook(int id)
-			=> Ok(await _bookService.DeleteBook(id));
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteBook(int id)
+        {
+            var deleteBook = await _bookService.DeleteBook(id);
+            if (deleteBook == false) return NotFound();
+            return Ok(deleteBook);
+        }
 
-		[HttpPatch("updatebook/{id}")]
-		public async Task<IActionResult> PatchBook(FullBookDTO bookDTO, int id)
-			=> Ok(await _bookService.PatchBook(bookDTO,id));
-
-		[HttpPut("updatebook/{id}")]
-		public async Task<IActionResult> PutBook(FullBookDTO bookDTO, int id)
-			=> Ok(await _bookService.PutBook(bookDTO, id));
-	}
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PatchBook([FromBody] FullBookDTO bookDTO, int id)
+        {
+            var updatedBook = await _bookService.PatchBook(bookDTO, id);
+            if (updatedBook == null) return NotFound();
+            return Ok(updatedBook);
+        }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutBook([FromBody] FullBookDTO bookDTO, int id)
+        {
+            var updatedBook = await _bookService.PutBook(bookDTO, id);
+            if (updatedBook == null) return NotFound();
+            return Ok(updatedBook);
+        }
+    }
 }
