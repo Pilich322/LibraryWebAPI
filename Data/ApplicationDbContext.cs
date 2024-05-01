@@ -10,14 +10,5 @@ namespace LibraryWebAPI.Data
 
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { } //
 
-		protected override void OnModelCreating(ModelBuilder modelBuilder)
-		{
-			// Настройка отношений и каскадного удаления
-			modelBuilder.Entity<Author>()
-				.HasMany(a => a.Books)
-				.WithOne(b => b.Author) // убедиться, что у книги есть навигационное свойство 'Author'
-				.HasForeignKey(b => b.AuthorId)
-				.OnDelete(DeleteBehavior.Cascade); // Настройка каскадного удаления
-		}
 	}
 }

@@ -36,7 +36,7 @@ namespace LibraryWebAPI.Services
 					{
 						Name = bookDTO.BookName,
 						DateOfCreate = bookDTO.DateCreate,
-						AuthorId = author.Id
+						AuthorId = newAuthor.Id
 					});
 				}
 				await _context.SaveChangesAsync();

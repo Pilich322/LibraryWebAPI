@@ -31,7 +31,7 @@ namespace LibraryWebAPI.Controllers
 			=> Ok(await _authorService.DeleteAuthor(id));
 
 		[HttpPatch("updateauthor/{id}")]
-		public async Task<IActionResult> PatchAuthor(AuthorDTO authorDTO, int id)
+		public async Task<IActionResult> PatchAuthor([FromBody] AuthorDTO authorDTO, int id)
 			=> Ok(await _authorService.PatchAuthor(authorDTO, id));
 
 		[HttpPut("updateauthor/{id}")]
