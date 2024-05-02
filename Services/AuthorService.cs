@@ -68,6 +68,8 @@ namespace LibraryWebAPI.Services
             if (author == null) return false;
             else
             {
+                var books = await _context.Books.Where(a => a.AuthorId == author.Id).ToListAsync();
+                _context.Books.RemoveRange(books);
                 _context.Authors.Remove(author);
                 await _context.SaveChangesAsync();
                 return true;
